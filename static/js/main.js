@@ -36,14 +36,6 @@ async function checkApiStatus() {
 // Setup file upload
 function setupFileUpload() {
     const fileInput = document.getElementById('file-input');
-    const uploadLabel = document.querySelector('.upload-label');
-    
-    // Click handler
-    uploadLabel.addEventListener('click', function(e) {
-        if (e.target !== fileInput) {
-            fileInput.click();
-        }
-    });
     
     // Drag and drop handlers
     const uploadContainer = document.querySelector('.upload-container');
@@ -67,14 +59,13 @@ function setupFileUpload() {
         
         const files = e.dataTransfer.files;
         if (files.length > 0) {
-            fileInput.files = files;
             handleFileSelect(files[0]);
         }
     });
     
     // File input change handler
     fileInput.addEventListener('change', function(e) {
-        if (e.target.files.length > 0) {
+        if (e.target.files && e.target.files.length > 0) {
             handleFileSelect(e.target.files[0]);
         }
     });
@@ -110,6 +101,10 @@ async function handleFileSelect(file) {
             document.getElementById('image-section').classList.remove('hidden');
             document.getElementById('analysis-section').classList.add('hidden');
             hideError();
+            
+            // Reset file input so the same file can be selected again
+            const fileInput = document.getElementById('file-input');
+            fileInput.value = '';
         } else {
             showError(data.error || 'Failed to upload image.');
         }
