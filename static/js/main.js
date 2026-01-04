@@ -38,13 +38,6 @@ function setupFileUpload() {
     const fileInput = document.getElementById('file-input');
     const uploadLabel = document.querySelector('.upload-label');
     
-    // Click handler
-    uploadLabel.addEventListener('click', function(e) {
-        if (e.target !== fileInput) {
-            fileInput.click();
-        }
-    });
-    
     // Drag and drop handlers
     const uploadContainer = document.querySelector('.upload-container');
     
@@ -64,10 +57,9 @@ function setupFileUpload() {
         e.preventDefault();
         uploadContainer.style.borderColor = 'var(--border-color)';
         uploadContainer.style.backgroundColor = 'var(--card-bg)';
-        
+
         const files = e.dataTransfer.files;
         if (files.length > 0) {
-            fileInput.files = files;
             handleFileSelect(files[0]);
         }
     });
